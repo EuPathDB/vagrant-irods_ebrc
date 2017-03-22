@@ -41,8 +41,8 @@ Vagrant Landrush Plugin (Optional)
 
 The [Landrush](https://github.com/phinze/landrush) plugin for Vagrant
 provides a local DNS where guest hostnames are registered. This permits,
-for example, the `rs1` guest to contact the iCAT enabled server by its
-`ies.vm` hostname - a requirement for iRODS installation and function.
+for example, the `consumer1` guest to contact the iCAT enabled server by its
+`provider.vm` hostname - a requirement for iRODS installation and function.
 This plugin is not strictly required but it makes life easier than
 editing `/etc/hosts` files. This plugin has maximum benefit for OS X
 hosts, some benefit for Linux hosts and no benefit for Windows. Windows
@@ -68,7 +68,7 @@ Usage
 Obtain a Local Copy of This Vagrant Project
 --------------------------
 
-Using either Git or Subversion,
+Using Git,
 
     git clone https://github.com/mheiges/vagrant-irods_ebrc.git
 
@@ -92,19 +92,19 @@ Start the Virtual Machines
 
 There are three virtual machines defined
 
-- `ies`: iCAT enabled resource server with iCommands. This VM alone is sufficient
+- `provider`: iCAT enabled resource server with iCommands. This VM alone is sufficient
 for working with the default `ebrcResc` resource.
-- `rs1`: a resource server with iCommands.
+- `consumer1`: a consumer server with iCommands.
 - `client`: a server with only iCommands installed.
 
     cd vagrant-irods_ebrc
     vagrant up
 
-Or start them individually, but be aware that `rs1` depends on the
-availability of the iCAT on `ies`.
+Or start them individually, but be aware that `consumer1` depends on the
+availability of the `provider`.
 
-    vagrant up ies
-    vagrant up rs1
+    vagrant up provider
+    vagrant up consumer1
     vagrant up client
 
 ssh to the Virtual Machines
@@ -113,8 +113,8 @@ ssh to the Virtual Machines
 To connect to the individual VMs as the `vagrant` user, run one of the
 following.
 
-    vagrant ssh ies
-    vagrant ssh rs1
+    vagrant ssh provider
+    vagrant ssh consumer1
     vagrant ssh client
 
 
@@ -134,33 +134,31 @@ Limitations
 Dependency on EBRC Yum Repository
 -----------------
 
-The iRODS software provisioning depends on EBRC's private yum
-repository. You will need to be within EBRC's IP subnets in order to do
-the provisioning. Once the virtual machines are provisioned you can work
-with them anywhere. This dependency on the restricted yum repo will be
-removed if and when RENCI establishes their public repository as part of
-the iRODS 4.2 release.
+Some of the modules rely on EBRC's private yum repository (ebrc_java_stack,
+ebrc_maven_stack). You will need to be within EBRC's IP subnets in order to
+provision these. Once the virtual machines are provisioned you can work with
+them anywhere. 
 
 Preference for Landrush Plugin and OS X
 -----------------
 
-The installation of the resource server (rs1) depends on the
-`ies.irods.vm` hostname being resolvable to the IP address of the
-iCAT-enabled-server (ies).
+The installation of the consumer server (consumer1) depends on the
+`provider.irods.vm` hostname being resolvable to the IP address of the provider
+(provider).
 
-The landrush plugin provides a DNS infrastructure that includes entries
-each of the guests. With this DNS in place, a single `vagrant up`
-command will sequentially and seamlessly prepare each `ies`, `rs1` and
-`client` guest. That is, by the time `rs1` needs to talk to the IES
-server, `ies.irods.vm` will be configured and resolvable in DNS. This
-infrastructure is best supported on OS X and not at all on Windows
-hosts. See the landrush documentation for further explanation.
+The landrush plugin provides a DNS infrastructure that includes entries each of
+the guests. With this DNS in place, a single `vagrant up` command will
+sequentially and seamlessly prepare each `provider`, `consumer1` and `client`
+guest. That is, by the time `consumer1` needs to talk to the provider server,
+`provider.irods.vm` will be configured and resolvable in DNS. This
+infrastructure is best supported on OS X and not at all on Windows hosts. See
+the landrush documentation for further explanation.
 
-With out the DNS provided by the landrush plugin you will need to
-`vagrant up --no-provision` each box separately, manually cross-reference
-the guests in `/etc/hosts` files and then manually provision with Puppet
-in `ies`, `rs1`, `client` order (see **Manual iRODS Installation** in
-this document).
+Without the DNS provided by the landrush plugin you will need to `vagrant up
+--no-provision` each box separately, manually cross-reference the guests in
+`/etc/hosts` files and then manually provision with Puppet in `provider`,
+`consumer1`, `client` order (see **Manual iRODS Installation** in this
+document).
 
 
 Manual iRODS Installation
@@ -168,22 +166,21 @@ Manual iRODS Installation
 
     sudo /opt/puppetlabs/bin/puppet apply --environment=production /etc/puppetlabs/code/environments/production/manifests/site.pp
 
-Packaging `ies` node for application development
+Packaging `provider` node for application development
 =======
 
 This Vagrant project is targeted for development of Puppet manifests and
-advanced tinkering with iRODS feature. For a lot of application
-development one only needs the `ies` box to provide the data
-ingress/egress over the default resource. To support that, the `ies` box
-alone can be packaged for distribution. See
-https://github.com/EuPathDB/vagrant-irods_ebrc_prod_model.git for
-example Vagrant project.
+advanced tinkering with iRODS feature. For a lot of application development one
+only needs the `provider` box to provide the data ingress/egress over the
+default resource. To support that, the `provider` box alone can be packaged for
+distribution. See https://github.com/EuPathDB/vagrant-irods_ebrc_prod_model.git
+for example Vagrant project.
 
     cd vagrant-irods_ebrc
 
     rm irods-ebrc-prod-model.box
 
-    vagrant package --base $(cat .vagrant/machines/ies/virtualbox/id) --output irods-ebrc-prod-model.box
+    vagrant package --base $(cat .vagrant/machines/provider/virtualbox/id) --output irods-ebrc-prod-model.box
 
     SHA2=(`shasum -a 256 irods-ebrc-prod-model.box`)
 
