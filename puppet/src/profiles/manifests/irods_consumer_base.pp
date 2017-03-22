@@ -1,4 +1,4 @@
-# base configuration for iRODS resource and iCAT servers.
+# base configuration for iRODS consumer and provider servers.
 # Not needed on nodes with only iRODS client (iCommands).
 #
 # Requires hiera data hash of the form
@@ -15,7 +15,7 @@
 # where the 'irods' username in this example matches the value set for
 # $irods::globals::srv_acct
 
-class profiles::irods_resource_base {
+class profiles::irods_consumer_base {
 
   include ::firewalld
   include ::irods::globals
@@ -96,7 +96,7 @@ class profiles::irods_resource_base {
   }
 
   # Hack to fix Vagrant landrush DNS NATing clobbered by firewalld
-  # reload. Without this the resource server setup will fail due to
+  # reload. Without this the consumer server setup will fail due to
   # failure to resolve the iCAT hostname.
   Firewalld_rich_rule {
     subscribe => Exec['save_landrush_iptables'],

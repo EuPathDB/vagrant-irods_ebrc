@@ -4,14 +4,14 @@
 class profiles::irods_provider {
 
   include ::profiles::base
-  include ::profiles::irods_resource_base
+  include ::profiles::irods_consumer_base
   include ::profiles::irods_postgres_provider
   include ::irods::provider
   include ::profiles::irods_icommands
   include ::profiles::irods_pam
 
   Class['profiles::base'] ->
-  Class['profiles::irods_resource_base'] ->
+  Class['profiles::irods_consumer_base'] ->
   Class['profiles::irods_postgres_provider'] ->
   Class['irods::provider'] ->
   file { '/etc/irods/ebrc.re':
