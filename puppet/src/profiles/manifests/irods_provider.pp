@@ -5,15 +5,15 @@ class profiles::irods_provider {
 
   include ::profiles::base
   include ::profiles::irods_resource_base
-  include ::profiles::irods_postgres_icat
-  include ::irods::icat
+  include ::profiles::irods_postgres_provider
+  include ::irods::provider
   include ::profiles::irods_icommands
   include ::profiles::irods_pam
 
   Class['profiles::base'] ->
   Class['profiles::irods_resource_base'] ->
-  Class['profiles::irods_postgres_icat'] ->
-  Class['irods::icat'] ->
+  Class['profiles::irods_postgres_provider'] ->
+  Class['irods::provider'] ->
   file { '/etc/irods/ebrc.re':
     ensure => 'file',
     source => 'puppet:///modules/profiles/irods/ebrc.re',
@@ -25,7 +25,7 @@ class profiles::irods_provider {
 
   package { 'irods-resource-plugin-shareuf-4.2.0':
     ensure  => 'latest',
-    require => Class['::irods::icat'],
+    require => Class['::irods::provider'],
   }
 
 }

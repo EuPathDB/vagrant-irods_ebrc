@@ -2,14 +2,14 @@ BOX = 'ebrc/centos-7-64-puppet'
 TLD = 'irods.vm'
 
 IRODS_HOSTS = {
-  :ies => { # iCAT-enabled Server
+  :provider => { # Provider, formerly iCAT-enabled Server
     :vagrant_box     => BOX,
-    :wf_hostname     => 'ies.irods.vm',
+    :wf_hostname     => 'provider.irods.vm',
     :puppet_manifest => 'site.pp'
   },
-  :rs1 => { # Resource Server
+  :consumer1 => { # consumer, formerly Resource Server
     :vagrant_box     => BOX,
-    :wf_hostname     => 'rs1.irods.vm',
+    :wf_hostname     => 'consumer1.irods.vm',
     :puppet_manifest => 'site.pp'
   },
   :client => { # server with iCommands only

@@ -1,9 +1,9 @@
 # Install Postgres and configure a iRODS iCAT database
-class profiles::irods_postgres_icat {
+class profiles::irods_postgres_provider {
 
-  $db_name     = hiera('irods::icat::db_name')
-  $db_user     = hiera('irods::icat::db_user')
-  $db_password = hiera('irods::icat::db_password')
+  $db_name     = hiera('irods::provider::db_name')
+  $db_user     = hiera('irods::provider::db_user')
+  $db_password = hiera('irods::provider::db_password')
 
   include ::postgresql::server
 

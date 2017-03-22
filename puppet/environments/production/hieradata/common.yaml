@@ -14,32 +14,32 @@ ebrc_maven::maven_home: /usr/java/maven-3.3.3
 java_keystore_target: /etc/pki/tls/certs/cacerts
 java_keystore_passwd: graeo5locza
 
-irods::globals::icat_server: ies.irods.vm
-irods::globals::icat_server_zone: ebrc
-irods::globals::icat_admin_user: icatadmin
-irods::globals::icat_admin_pass: passWORD
+irods::globals::provider_server: provider.irods.vm
+irods::globals::provider_server_zone: ebrc
+irods::globals::provider_admin_user: icatadmin
+irods::globals::provider_admin_pass: passWORD
 irods::globals::srv_negotiation_key: fbb4c4fd185e3a98f8715ff5c1c86715
 irods::globals::ctrl_plane_key: ca2ad0abf0faa703cf0829af99465ac9
 irods::globals::srv_zone_key: e83ac54fe6d5d66f24d16644ce72d9ae
 
-irods::icat::db_vendor: postgres
-irods::icat::db_name: ICAT
-irods::icat::db_user: irods
-irods::icat::db_password: passWORD
-irods::icat::db_srv_host: localhost
-irods::icat::re_rulebase_set: ['ebrc', 'core']
+irods::provider::db_vendor: postgres
+irods::provider::db_name: ICAT
+irods::provider::db_user: irods
+irods::provider::db_password: passWORD
+irods::provider::db_srv_host: localhost
+irods::provider::re_rulebase_set: ['ebrc', 'core']
 
 irods::icommands:
   - { exec: mkresc, resc: ebrcResc, type: passthru }
   - { exec: mkresc, resc: rr1Resc, type: roundrobin }
-  - { exec: mkresc, resc: data_7k_001, type: unixfilesystem, path: 'ies.irods.vm:/srv/irods/vault_7k_001' }
-  - { exec: mkresc, resc: data_7k_002, type: unixfilesystem, path: 'ies.irods.vm:/srv/irods/vault_7k_002' }
+  - { exec: mkresc, resc: data_7k_001, type: unixfilesystem, path: 'provider.irods.vm:/srv/irods/vault_7k_001' }
+  - { exec: mkresc, resc: data_7k_002, type: unixfilesystem, path: 'provider.irods.vm:/srv/irods/vault_7k_002' }
   - { exec: addchildtoresc, resc: rr1Resc, chld: data_7k_001 }
   - { exec: addchildtoresc, resc: rr1Resc, chld: data_7k_002 }
   - { exec: addchildtoresc, resc: ebrcResc, chld: rr1Resc }
 #   - { exec: mkresc, resc: repl, type: replication }
 #   - { exec: mkresc, resc: data_7k_003, type: unixfilesystem, path: 'rs1.irods.vm:/srv/irods/vault_7k_003' }
-#   - { exec: mkresc, resc: data_7k_004, type: unixfilesystem, path: 'ies.irods.vm:/srv/irods/vault_7k_004' }
+#   - { exec: mkresc, resc: data_7k_004, type: unixfilesystem, path: 'provider.irods.vm:/srv/irods/vault_7k_004' }
 #   - { exec: addchildtoresc, resc: repl, chld: data_7k_003 }
 #   - { exec: addchildtoresc, resc: repl, chld: data_7k_004 }
   - { exec: mkuser, user: wrkspuser, type: rodsuser, password: passWORD }
@@ -58,7 +58,7 @@ irods::icommands:
   - { exec: ichmod, action: own,     user: staffGroup, collOrDataObj: /ebrc/data }
 #   - { exec: mkresc, resc: asfReplResc, type: replication }
 #   - { exec: mkresc, resc: asfRescS, type: shareuf, path: 'rs1.irods.vm:/var/www/Common/apiSiteFilesMirror' }
-#   - { exec: mkresc, resc: asfRescN, type: shareuf, path: 'ies.irods.vm:/srv/irods/apiSiteFilesMirror' }
+#   - { exec: mkresc, resc: asfRescN, type: shareuf, path: 'provider.irods.vm:/srv/irods/apiSiteFilesMirror' }
 #   - { exec: addchildtoresc, resc: asfReplResc, chld: asfRescS }
 #   - { exec: addchildtoresc, resc: asfReplResc, chld: asfRescN }
   - { exec: imkdir, collection: /ebrc/apiSiteFilesMirror }

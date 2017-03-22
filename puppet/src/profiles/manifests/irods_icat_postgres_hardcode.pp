@@ -1,5 +1,5 @@
 # iRODS iCAT server
-class profiles::irods_icat_postgres_hardcode {
+class profiles::irods_provider_postgres_hardcode {
 
   #include ::profiles::irods_icat
   include ::postgresql::server
@@ -9,9 +9,9 @@ class profiles::irods_icat_postgres_hardcode {
   #Class['profiles::irods_icat']
 
   if false == true {
-    include ::irods::icat::setup
+    include ::irods::provider::setup
     Postgresql::Server::Db['ICAT'] ~>
-    Class['irods::icat::setup']
+    Class['irods::provider::setup']
   }
 
 
