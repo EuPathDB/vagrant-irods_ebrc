@@ -18,7 +18,7 @@ FORGE
       puppetlabs-apt (< 3.0.0, >= 1.8.0)
       puppetlabs-concat (< 3.0.0, >= 1.1.0)
       puppetlabs-stdlib (~> 4.0)
-    puppetlabs-stdlib (4.15.0)
+    puppetlabs-stdlib (4.16.0)
     stahnma-epel (1.2.2)
       puppetlabs-stdlib (>= 3.0.0)
 
@@ -47,7 +47,7 @@ GIT
 GIT
   remote: https://github.com/EuPathDB/puppet-irods.git
   ref: irods4.2
-  sha: 6e48d45f34b79a2cb7c9a4437df09c2ba57d3a4e
+  sha: ab8ef21c4531d55ad2a51c490993fb8d802c216b
   specs:
     ebrc-irods (0.1.0)
       puppetlabs-stdlib (>= 1.0.0)
