@@ -1,0 +1,5 @@
+---
+roles:
+  - profiles::irods_postgres_slave
+postgresql::server::manage_recovery_conf: true
+postgresql::server::needs_initdb: false

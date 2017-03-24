@@ -7,6 +7,11 @@ IRODS_HOSTS = {
     :wf_hostname     => 'provider.irods.vm',
     :puppet_manifest => 'site.pp'
   },
+  :db2 => { # postgres replication slave
+    :vagrant_box     => BOX,
+    :wf_hostname     => 'db2.irods.vm',
+    :puppet_manifest => 'site.pp'
+  },
   :consumer1 => { # consumer, formerly Resource Server
     :vagrant_box     => BOX,
     :wf_hostname     => 'consumer1.irods.vm',

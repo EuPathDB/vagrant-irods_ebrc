@@ -26,6 +26,8 @@ irods::provider::db_vendor: postgres
 irods::provider::db_name: ICAT
 irods::provider::db_user: irods
 irods::provider::db_password: passWORD
+irods::provider::db_repl_user: replicator
+irods::provider::db_repl_password: thepassword
 irods::provider::db_srv_host: localhost
 irods::provider::re_rulebase_set: ['ebrc', 'core']
 

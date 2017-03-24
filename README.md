@@ -96,6 +96,7 @@ There are three virtual machines defined
 for working with the default `ebrcResc` resource.
 - `consumer1`: a consumer server with iCommands.
 - `client`: a server with only iCommands installed.
+- `db2`: a postgres replicated server, replicating from provider1
 
     cd vagrant-irods_ebrc
     vagrant up
@@ -106,6 +107,7 @@ availability of the `provider`.
     vagrant up provider
     vagrant up consumer1
     vagrant up client
+    vagrant up db2
 
 ssh to the Virtual Machines
 -----------------
@@ -116,6 +118,7 @@ following.
     vagrant ssh provider
     vagrant ssh consumer1
     vagrant ssh client
+    vagrant ssh db2
 
 
 iRODS Puppet module development
